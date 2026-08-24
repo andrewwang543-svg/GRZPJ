@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
-import { ArrowUpRight, Heart, Mail, MessageCircle, Menu, Play, Send, Star } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, Heart, MessageCircle, Star } from "lucide-react";
 
-const navItems = ["首页", "作品", "关于", "联系"];
+const navItems = ["首页", "作品"];
 
 const yuHeweiFeatureUrl =
   "https://www.bilibili.com/video/BV14p4y177hc/?sharesource_=copy_web&vdsource=6b882d51afbb66a358ab8821904dda_08";
@@ -25,20 +25,12 @@ const workSections = [
   {
     title: "工作剪辑作品",
     label: "Editing Reel",
-    description: "影像编辑、采访剪辑、短片包装与跨平台传播项目。",
-    works: [
+    featuredWorks: [
       {
-        title: "电影《坚如磐石》于和伟角色特辑",
+        title: "《坚如磐石》于和伟角色特辑",
         type: "视频剪辑 / 电影特辑",
         href: yuHeweiFeatureUrl,
-        cover: "/images/under-the-light-yu-hewei.png",
-        roles: standardEditingRoles,
-      },
-      {
-        title: "《坚如磐石》雷佳音角色特辑",
-        type: "视频剪辑 / 电影特辑",
-        href: "https://www.bilibili.com/video/BV1Pj41127Gr/?share_source=copy_web&vd_source=6b882d51afbb66a358ab8821904dda08",
-        cover: "/images/under-the-light-lei-jiayin.png",
+        cover: "/images/under-the-light-yu-hewei-new.png",
         roles: standardEditingRoles,
       },
       {
@@ -54,6 +46,15 @@ const workSections = [
         href: "https://www.bilibili.com/video/BV1mW4y1S74Z/?share_source=copy_web&vd_source=6b882d51afbb66a358ab8821904dda08",
         cover: "/images/changan-voice-story.png",
         roles: interviewEditingRoles,
+      },
+    ],
+    works: [
+      {
+        title: "《坚如磐石》雷佳音角色特辑",
+        type: "视频剪辑 / 电影特辑",
+        href: "https://www.bilibili.com/video/BV1Pj41127Gr/?share_source=copy_web&vd_source=6b882d51afbb66a358ab8821904dda08",
+        cover: "/images/under-the-light-lei-jiayin.png",
+        roles: standardEditingRoles,
       },
       {
         title: "《茶阿二中》导演故事",
@@ -81,23 +82,23 @@ const workSections = [
   {
     title: "个人自媒体",
     label: "Personal Media",
-    description: "个人选题、社媒内容和栏目化表达，展示持续创作能力。",
     account: {
       name: "抽象科普",
       avatar: "/images/abstract-science-logo.png",
       href: "https://v.douyin.com/xh54heTzm_k/",
       stats: [
-        { label: "运营时长", value: "1.5年" },
         { label: "粉丝", value: "120万+" },
-        { label: "发布作品", value: "82条" },
         { label: "播放破千万作品", value: "8条" },
+        { label: "运营时长", value: "1.5年" },
+        { label: "发布作品", value: "82条" },
       ],
+      type: "AI科普自媒体",
       note: "所有数据统计截止2026.8",
     },
     works: [
       {
         title: "抽象科普作品：四季变化",
-        href: "https://v.douyin.com/_6uwPPZGOIk/",
+        href: "https://v.douyin.com/FTf8-aDuu1c/",
         cover: "/images/abstract-science-protein.jpg",
         coverMode: "fill",
         metrics: [
@@ -141,7 +142,7 @@ const workSections = [
       },
       {
         title: "抽象科普作品：驱动蛋白",
-        href: "https://v.douyin.com/FTf8-aDuu1c/",
+        href: "https://v.douyin.com/_6uwPPZGOIk/",
         cover: "/images/abstract-science-seasons.jpg",
         coverMode: "fill",
         metrics: [
@@ -155,7 +156,6 @@ const workSections = [
   {
     title: "数据新闻作品",
     label: "Data Journalism",
-    description: "以数据采集、清洗、可视化和叙事结构为核心的报道作品。",
     display: "links",
     works: [
       {
@@ -177,24 +177,13 @@ const workSections = [
 function Header() {
   return (
     <header className="site-header" aria-label="主导航">
-      <a className="brand" href="#top" aria-label="返回首页">
-        <span className="brand-mark">AW</span>
-        <span className="brand-name">Portfolio</span>
-      </a>
       <nav className="nav-links">
         {navItems.map((item) => (
-          <a key={item} href={item === "联系" ? "#contact" : item === "作品" ? "#works" : "#top"}>
+          <a key={item} href={item === "作品" ? "#works" : "#top"}>
             {item}
           </a>
         ))}
       </nav>
-      <a className="contact-button" href="mailto:hello@example.com">
-        <Mail size={18} />
-        联系我
-      </a>
-      <button className="menu-button" aria-label="打开菜单">
-        <Menu size={22} />
-      </button>
     </header>
   );
 }
@@ -223,9 +212,9 @@ function useGeneratedHeroVideo() {
       const height = canvas.height;
       const time = frame / 60;
       const gradient = context.createLinearGradient(0, 0, width, height);
-      gradient.addColorStop(0, "#281812");
-      gradient.addColorStop(0.42, "#8f5238");
-      gradient.addColorStop(1, "#18120f");
+      gradient.addColorStop(0, "#160f0d");
+      gradient.addColorStop(0.46, "#75402b");
+      gradient.addColorStop(1, "#120e0d");
       context.fillStyle = gradient;
       context.fillRect(0, 0, width, height);
 
@@ -243,6 +232,17 @@ function useGeneratedHeroVideo() {
       context.fillStyle = light;
       context.fillRect(0, 0, width, height);
 
+      for (let glow = 0; glow < 5; glow += 1) {
+        const glowX = width * (0.14 + glow * 0.2) + Math.sin(time * (0.18 + glow * 0.03) + glow) * 90;
+        const glowY = height * (0.16 + (glow % 3) * 0.28) + Math.cos(time * 0.22 + glow) * 46;
+        const radius = 130 + glow * 48;
+        const bokeh = context.createRadialGradient(glowX, glowY, 0, glowX, glowY, radius);
+        bokeh.addColorStop(0, glow % 2 ? "rgba(232, 159, 75, 0.09)" : "rgba(185, 54, 37, 0.07)");
+        bokeh.addColorStop(1, "rgba(0, 0, 0, 0)");
+        context.fillStyle = bokeh;
+        context.fillRect(glowX - radius, glowY - radius, radius * 2, radius * 2);
+      }
+
       context.lineCap = "round";
       for (let line = 0; line < 7; line += 1) {
         context.beginPath();
@@ -255,6 +255,13 @@ function useGeneratedHeroVideo() {
           context.lineTo(x, y + wave + Math.cos(time * 0.4 + line) * 18);
         }
         context.stroke();
+      }
+
+      context.fillStyle = "rgba(255, 234, 204, 0.045)";
+      for (let grain = 0; grain < 150; grain += 1) {
+        const grainX = (Math.sin(grain * 35.7 + time * 0.08) * 0.5 + 0.5) * width;
+        const grainY = (Math.sin(grain * 79.3 + time * 0.05) * 0.5 + 0.5) * height;
+        context.fillRect(grainX, grainY, 1, 1);
       }
 
       animationFrame = requestAnimationFrame(() => drawFrame(frame + 1));
@@ -301,6 +308,33 @@ function useGeneratedHeroVideo() {
   return videoRef;
 }
 
+function useScrollReveal() {
+  useEffect(() => {
+    const elements = document.querySelectorAll(".reveal");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      elements.forEach((element) => element.classList.add("is-visible"));
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -24px" }
+    );
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+}
+
 function Hero() {
   const videoRef = useGeneratedHeroVideo();
 
@@ -310,19 +344,10 @@ function Hero() {
       <div className="hero-shade" />
       <Header />
       <div className="hero-inner">
-        <p className="eyebrow">Journalism / Editing / Independent Media</p>
-        <h1>
-          用清晰的叙事，让复杂信息<span className="nowrap">被看见。</span>
-        </h1>
+        <p className="hero-signature">Andrew Wang</p>
+        <h1>作品集</h1>
         <div className="hero-lower">
-          <p>
-            我关注数据、影像与内容传播之间的连接。这里收录我的数据新闻、工作剪辑与个人自媒体作品，
-            帮助雇主快速了解我的选题能力、执行质量和视觉表达。
-          </p>
-          <a className="primary-link" href="#works">
-            <Play size={18} />
-            查看作品
-          </a>
+          <p>您好，我是Andrew。这里收录了我过往在工作和实践中积累的一些作品，帮助您快速了解我的能力。</p>
         </div>
       </div>
     </section>
@@ -341,32 +366,134 @@ function MetricIcon({ kind }) {
   return <Star size={17} fill="currentColor" strokeWidth={2.5} />;
 }
 
+function ProjectRoles({ roles }) {
+  if (!roles) return null;
+
+  return (
+    <div className="project-roles" aria-label="参与工作">
+      <span className="role-caption">参与工作</span>
+      <div className="role-list">
+        {roles.map((role) => (
+          <span className={role.highlighted ? "role-chip highlighted" : "role-chip"} key={role.label}>
+            {role.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function WorkCard({ work, index, compact = false }) {
+  return (
+    <article
+      className={`${work.metrics ? "project-card metric-card" : "project-card"} reveal${compact ? " compact-card" : ""}`}
+      style={{ "--reveal-delay": `${index * 70}ms` }}
+    >
+      <div
+        className={[
+          "project-cover",
+          work.cover ? "has-image" : "",
+          work.coverMode === "contain" ? "contain-image" : "",
+          work.coverMode === "fill" ? "fill-image" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        aria-label={`${work.title}封面`}
+      >
+        {work.cover ? <img src={work.cover} alt={`${work.title}封面`} /> : null}
+      </div>
+      <div className="project-copy">
+        {work.type ? <p>{work.type}</p> : null}
+        {work.metrics ? (
+          <dl className="project-metrics" aria-label={`${work.title}作品数据`}>
+            {work.metrics.map((metric) => (
+              <div className={`metric-item ${metric.kind}`} key={metric.label}>
+                <dt>
+                  <MetricIcon kind={metric.kind} />
+                  <span>{metric.label}</span>
+                </dt>
+                <dd>{metric.value}</dd>
+              </div>
+            ))}
+          </dl>
+        ) : (
+          <h4>{work.title}</h4>
+        )}
+        <ProjectRoles roles={work.roles} />
+      </div>
+      <a className="project-link" href={work.href} target="_blank" rel="noreferrer">
+        <span>查看作品</span>
+        <ArrowUpRight size={18} />
+      </a>
+    </article>
+  );
+}
+
+function FeaturedRail({ works }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const updateActiveFromWheel = (event) => {
+    if (Math.abs(event.deltaX) < 4 && Math.abs(event.deltaY) < 4) return;
+    event.preventDefault();
+    const direction = event.deltaX || event.deltaY;
+    setActiveIndex((currentIndex) => (direction > 0 ? (currentIndex + 1) % works.length : (currentIndex - 1 + works.length) % works.length));
+  };
+
+  return (
+    <div className="featured-rail reveal" onWheel={updateActiveFromWheel} aria-label="主推工作剪辑作品">
+      {works.map((work, index) => {
+        const isActive = activeIndex === index;
+
+        return (
+          <article
+            className={`featured-panel${isActive ? " is-active" : ""}`}
+            key={work.title}
+            onMouseEnter={() => setActiveIndex(index)}
+            onFocus={() => setActiveIndex(index)}
+          >
+            <img src={work.cover} alt={`${work.title}封面`} />
+            <div className="featured-panel-shade" />
+            <div className="featured-copy">
+              <p>{work.type}</p>
+              <h4>{work.title}</h4>
+              <ProjectRoles roles={work.roles} />
+              <a className="featured-link" href={work.href} target="_blank" rel="noreferrer">
+                <span>查看作品</span>
+                <ArrowUpRight size={18} />
+              </a>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
 function Works() {
   return (
     <main className="works" id="works">
-      <div className="section-heading">
+      <div className="section-heading reveal">
         <p className="eyebrow">Selected Work</p>
         <h2>主要作品</h2>
       </div>
       <div className="work-sections">
         {workSections.map((section, sectionIndex) => (
-          <section className="work-category" key={section.title} aria-labelledby={`work-title-${sectionIndex}`}>
+          <section className="work-category reveal" key={section.title} aria-labelledby={`work-title-${sectionIndex}`}>
             <div className="category-heading">
               <div>
                 <p className="card-label">{section.label}</p>
                 <h3 id={`work-title-${sectionIndex}`}>{section.title}</h3>
               </div>
-              <p>{section.description}</p>
             </div>
             {section.account ? (
               <a className="account-card" href={section.account.href} target="_blank" rel="noreferrer">
                 <img src={section.account.avatar} alt={`${section.account.name}账号头像`} />
                 <div className="account-copy">
-                  <p className="account-label">Creator Account</p>
+                  <p className="account-label">{section.account.type}</p>
                   <h4>{section.account.name}</h4>
                   <dl>
-                    {section.account.stats.map((stat) => (
-                      <div key={stat.label}>
+                    {section.account.stats.map((stat, statIndex) => (
+                      <div className={statIndex < 2 ? "account-stat primary-stat" : "account-stat"} key={stat.label}>
                         <dt>{stat.label}</dt>
                         <dd>{stat.value}</dd>
                       </div>
@@ -380,10 +507,26 @@ function Works() {
               </a>
             ) : null}
             {section.account ? <h4 className="featured-title">代表作品</h4> : null}
-            {section.display === "links" ? (
+            {section.featuredWorks ? (
+              <>
+                <FeaturedRail works={section.featuredWorks} />
+                <div className="project-grid editing-secondary-grid">
+                  {section.works.map((work, workIndex) => (
+                    <WorkCard work={work} index={workIndex} key={`${section.title}-${work.title}`} compact />
+                  ))}
+                </div>
+              </>
+            ) : section.display === "links" ? (
               <div className="data-link-list">
                 {section.works.map((work, workIndex) => (
-                  <a className="data-link-item" href={work.href} target="_blank" rel="noreferrer" key={work.title}>
+                  <a
+                    className="data-link-item reveal"
+                    href={work.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    key={work.title}
+                    style={{ "--reveal-delay": `${workIndex * 70}ms` }}
+                  >
                     <span>{String(workIndex + 1).padStart(2, "0")}</span>
                     <strong>{work.title}</strong>
                     <ArrowUpRight size={22} />
@@ -393,63 +536,7 @@ function Works() {
             ) : (
               <div className={section.account ? "project-grid media-project-grid" : "project-grid"}>
                 {section.works.map((work, workIndex) => (
-                  <article className={work.metrics ? "project-card metric-card" : "project-card"} key={`${section.title}-${workIndex}`}>
-                    <div
-                      className={[
-                        "project-cover",
-                        work.cover ? "has-image" : "",
-                        work.coverMode === "contain" ? "contain-image" : "",
-                        work.coverMode === "fill" ? "fill-image" : "",
-                      ]
-                        .filter(Boolean)
-                        .join(" ")}
-                      aria-label={`${work.title}封面`}
-                    >
-                      {work.cover ? <img src={work.cover} alt={`${work.title}封面`} /> : null}
-                      {work.coverMode === "contain" || work.coverMode === "fill" ? null : (
-                        <span>{String(workIndex + 1).padStart(2, "0")}</span>
-                      )}
-                    </div>
-                    <div className="project-copy">
-                      {work.type ? <p>{work.type}</p> : null}
-                      {work.metrics ? (
-                        <dl className="project-metrics" aria-label={`${work.title}作品数据`}>
-                          {work.metrics.map((metric) => (
-                            <div className={`metric-item ${metric.kind}`} key={metric.label}>
-                              <dt>
-                                <MetricIcon kind={metric.kind} />
-                                <span>{metric.label}</span>
-                              </dt>
-                              <dd>{metric.value}</dd>
-                            </div>
-                          ))}
-                        </dl>
-                      ) : (
-                        <h4>{work.title}</h4>
-                      )}
-                      {work.roles ? (
-                        <div className="project-roles" aria-label="参与工作">
-                          <span className="role-caption">参与工作</span>
-                          <div className="role-list">
-                            {work.roles.map((role) => (
-                              <span className={role.highlighted ? "role-chip highlighted" : "role-chip"} key={role.label}>
-                                {role.label}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      ) : null}
-                    </div>
-                    <a
-                      className="project-link"
-                      href={work.href}
-                      target={work.href.startsWith("http") ? "_blank" : undefined}
-                      rel={work.href.startsWith("http") ? "noreferrer" : undefined}
-                    >
-                      <span>查看作品</span>
-                      <ArrowUpRight size={18} />
-                    </a>
-                  </article>
+                  <WorkCard work={work} index={workIndex} key={`${section.title}-${work.title}`} />
                 ))}
               </div>
             )}
@@ -460,32 +547,13 @@ function Works() {
   );
 }
 
-function Contact() {
-  return (
-    <section className="contact-section" id="contact">
-      <div className="contact-inner">
-        <p className="eyebrow">Contact</p>
-        <h2>如果我的作品与你的团队需求契合，欢迎联系我。</h2>
-        <div className="contact-actions">
-          <a className="primary-link dark" href="mailto:hello@example.com">
-            <Send size={18} />
-            hello@example.com
-          </a>
-          <a className="text-link" href="tel:+8613800000000">
-            +86 138 0000 0000
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function App() {
+  useScrollReveal();
+
   return (
     <>
       <Hero />
       <Works />
-      <Contact />
     </>
   );
 }
